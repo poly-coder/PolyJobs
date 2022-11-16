@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="JobTypes.fs" />
+    <Compile Include="JobEvents.fs" />
+    <Compile Include="JobCommands.fs" />
+    <Compile Include="JobCommandInputs.fs" />
+    <Compile Include="JobValidations.fs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FsToolkit.ErrorHandling" Version="3.2.0" />
+    <PackageReference Include="Validus" Version="4.0.1" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33103.184
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "FsPolyJobs.Domain", "FsPolyJobs.Domain\FsPolyJobs.Domain.fsproj", "{6DAE0A74-F00C-4ED8-AB07-53F994FBC617}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6DAE0A74-F00C-4ED8-AB07-53F994FBC617}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6DAE0A74-F00C-4ED8-AB07-53F994FBC617}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6DAE0A74-F00C-4ED8-AB07-53F994FBC617}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6DAE0A74-F00C-4ED8-AB07-53F994FBC617}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {91496E2C-444D-4BB5-A984-0C86D82FEC53}
+	EndGlobalSection
+EndGlobal
