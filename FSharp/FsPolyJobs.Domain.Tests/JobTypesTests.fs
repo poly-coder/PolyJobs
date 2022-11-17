@@ -15,7 +15,7 @@ let toErrorList (errors: string) =
         |> Seq.toList
 
 let toMetadataMap (pairs: string) =
-    if isNull pairs then
+    if String.IsNullOrWhiteSpace pairs then
         Seq.empty
     else
         let clean s = if s = "" then null else s
@@ -247,23 +247,26 @@ let ``JobMaxProgress.CreateOptional errors`` (input: int) (errors: string) =
 [<InlineData("")>]
 [<InlineData("a=A;b=B;c=C")>]
 let ``JobMetadata.Create valid`` (input: string) =
-    let input = input |> Option.ofObj |> Option.map toMetadataMap
+    let input =
+        input |> Option.ofObj |> Option.map toMetadataMap
+
     let expectedValue = input |> Option.defaultValue Map.empty
     let result = input |> JobMetadata.Create "meta"
     let expected: JobMetadata = { value = expectedValue }
     test <@ result = Ok expected @>
 
-// [<Theory>]
-// [<InlineData(null, "'title' must not be empty")>]
-// [<InlineData("", "'title' must not be empty")>]
-// [<InlineData("    ", "'title' must not be empty")>]
-// [<InlineData("A very long title that should be rejected because only shorter titles are valid, never beyond 100 characters.",
-//              "'title' must be at less than 101 characters")>]
-// let ``JobMetadata.Create errors`` (input: string) (errors: string) =
-//     let result = input |> JobMetadata.Create "title"
+[<Theory>]
+[<InlineData("a=;b=", "'meta' values cannot be empty")>]
+[<InlineData("=A;=B", "'meta' keys cannot be empty")>]
+[<InlineData("=;=", "'meta' keys cannot be empty;'meta' values cannot be empty")>]
+let ``JobMetadata.Create errors`` (input: string) (errors: string) =
+    let input =
+        input |> Option.ofObj |> Option.map toMetadataMap
 
-//     let expected =
-//         toErrorList errors
-//         |> ValidationErrors.create "title"
+    let result = input |> JobMetadata.Create "meta"
 
-//     test <@ result = Error expected @>
+    let expected =
+        toErrorList errors
+        |> ValidationErrors.create "meta"
+
+    test <@ result = Error expected @>

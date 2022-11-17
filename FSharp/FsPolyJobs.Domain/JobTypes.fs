@@ -4,7 +4,11 @@ open Validus
 open System
 
 module internal Utils =
-    let trim value = if String.IsNullOrWhiteSpace value then "" else value.Trim()
+    let trim value =
+        if String.IsNullOrWhiteSpace value then
+            ""
+        else
+            value.Trim()
 
 open Utils
 
@@ -25,6 +29,7 @@ type JobDescription =
         fun field input ->
             validate {
                 let input = trim input
+
                 if String.IsNullOrEmpty input then
                     return { value = None }
                 else
@@ -63,13 +68,12 @@ type JobStatus =
         fun field input ->
             validate {
                 match input with
-                | InProgressInput ->
-                    return InProgress
+                | InProgressInput -> return InProgress
                 | SuccessInput input ->
-                    let! input = input |> JobUserData.Create (field + ".success")
+                    let! input = input |> JobUserData.Create(field + ".success")
                     return Success input
                 | FailureInput input ->
-                    let! input = input |> JobUserData.Create (field + ".failure")
+                    let! input = input |> JobUserData.Create(field + ".failure")
                     return Failure input
             }
 
@@ -84,6 +88,7 @@ type JobProgress =
                     let! input = input |> Check.Int.greaterThan -1 field
                     return { value = input }
             }
+
     static member CreateOptional: Validator<int option, JobProgress option> =
         fun field input ->
             validate {
@@ -105,6 +110,7 @@ type JobMaxProgress =
                     let! input = input |> Check.Int.greaterThan 0 field
                     return { value = input }
             }
+
     static member CreateOptional: Validator<int option, JobMaxProgress option> =
         fun field input ->
             validate {
@@ -118,9 +124,22 @@ type JobMaxProgress =
 type JobMetadata =
     { value: Map<string, string> }
     static member Create: Validator<Map<string, string> option, JobMetadata> =
+        let validateNoEmptyKeys =
+            Validator.create (sprintf "'%s' keys cannot be empty") (fun input ->
+                input
+                |> Map.forall (fun key _ -> not (String.IsNullOrWhiteSpace key)))
+
+        let validateNoEmptyValues =
+            Validator.create (sprintf "'%s' values cannot be empty") (fun input ->
+                input
+                |> Map.forall (fun _ value -> not (String.IsNullOrWhiteSpace value)))
+
         fun field input ->
             validate {
                 match input with
                 | None -> return { value = Map.empty }
-                | Some input -> return { value = input }
+                | Some input ->
+                    let! _ = input |> validateNoEmptyKeys field
+                    and! _ = input |> validateNoEmptyValues field
+                    return { value = input }
             }
