@@ -4,26 +4,21 @@ type JobEvent =
     | JobWasCreated of JobWasCreated
     | JobWasUpdated of JobWasUpdated
 
-and JobWasCreated = {
-    title: string
-    description: string option
-    jobType: JobType
-    stepType: StepType
-    state: JobState
-    progress: int
-    maxProgress: int
-    status: JobStatus option
-    meta: Map<string, string>
-}
+and JobWasCreated =
+    { title: JobTitle
+      description: JobDescription
+      jobType: JobType
+      stepType: JobType
+      payload: JobUserData
+      progress: JobProgress
+      maxProgress: JobMaxProgress
+      status: JobStatus
+      meta: JobMetadata }
 
-and JobWasUpdated = {
-    title: string
-    description: string option
-    jobType: JobType
-    stepType: StepType
-    state: JobState option
-    progress: int option
-    maxProgress: int option
-    status: JobStatus option
-    meta: Map<string, string>
-}
+and JobWasUpdated =
+    { stepType: JobType
+      payload: JobUserData
+      progress: JobProgress
+      maxProgress: JobMaxProgress
+      status: JobStatus
+      meta: JobMetadata }

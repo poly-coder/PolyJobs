@@ -22,7 +22,7 @@ Implementation of a job repository on multiple languages.
 
 ## APIs
 
-- [.] REST
+- [ ] REST
 - [ ] NATS
 - [ ] gRPC
 - [ ] GraphQL
@@ -45,30 +45,38 @@ Implementation of a job repository on multiple languages.
 - [ ] Domain Driven Design
 - [ ] Telemetry
 - [ ] Dockerfile
+- [ ] Unit Testing
+- [ ] Integration Testing
+- [ ] I18n
 
 ## Table of development
 
-| Features       | F#  | C#  | Go  | Rust | Elixir | Clojure | Racket | Scala | Python |
-| -------------- | --- | --- | --- | ---- | ------ | ------- | ------ | ----- | ------ |
-| Domain         |     |     |     |      |        |         |        |       |        |
-| Validation     | ✅   |     |     |      |        |         |        |       |        |
-| Actor Model    |     |     |     |      |        |         |        |       |        |
-| Telemetry      |     |     |     |      |        |         |        |       |        |
-| Dockerfile     |     |     |     |      |        |         |        |       |        |
-| REST           |     |     |     |      |        |         |        |       |        |
-| NATS           |     |     |     |      |        |         |        |       |        |
-| gRPC           |     |     |     |      |        |         |        |       |        |
-| GraphQL        |     |     |     |      |        |         |        |       |        |
-| AMQP           |     |     |     |      |        |         |        |       |        |
-| TCP            |     |     |     |      |        |         |        |       |        |
-| ZeroMQ         |     |     |     |      |        |         |        |       |        |
-| In-memory      |     |     |     |      |        |         |        |       |        |
-| Redis          |     |     |     |      |        |         |        |       |        |
-| Event Sourcing |     |     |     |      |        |         |        |       |        |
-| SQL            |     |     |     |      |        |         |        |       |        |
-| noSQL          |     |     |     |      |        |         |        |       |        |
+| Features            | F#  | C#  | Go  | Rust | Elixir | Clojure | Racket | Scala | Python |
+| ------------------- | --- | --- | --- | ---- | ------ | ------- | ------ | ----- | ------ |
+| Domain              |     |     |     |      |        |         |        |       |        |
+| Validation          | ✅   |     |     |      |        |         |        |       |        |
+| Actor Model         |     |     |     |      |        |         |        |       |        |
+| Telemetry           |     |     |     |      |        |         |        |       |        |
+| Dockerfile          |     |     |     |      |        |         |        |       |        |
+| Unit Testing        |     |     |     |      |        |         |        |       |        |
+| Integration Testing |     |     |     |      |        |         |        |       |        |
+| I18n                |     |     |     |      |        |         |        |       |        |
+| REST                |     |     |     |      |        |         |        |       |        |
+| NATS                |     |     |     |      |        |         |        |       |        |
+| gRPC                |     |     |     |      |        |         |        |       |        |
+| GraphQL             |     |     |     |      |        |         |        |       |        |
+| AMQP                |     |     |     |      |        |         |        |       |        |
+| TCP                 |     |     |     |      |        |         |        |       |        |
+| ZeroMQ              |     |     |     |      |        |         |        |       |        |
+| In-memory           |     |     |     |      |        |         |        |       |        |
+| Redis               |     |     |     |      |        |         |        |       |        |
+| Event Sourcing      |     |     |     |      |        |         |        |       |        |
+| SQL                 |     |     |     |      |        |         |        |       |        |
+| noSQL               |     |     |     |      |        |         |        |       |        |
 
 ### F#
+
+Implementation of Jobs service in F#.
 
 #### Domain
 
@@ -96,4 +104,3 @@ There are multiple libraries that can be used to perform validation:
 
 - [FSharp.Control.FusionTasks](https://github.com/kekyo/FSharp.Control.FusionTasks)
   It is a library that provide some extensions to `Async` and `Task` workflows, to use them interchangeably.
-
