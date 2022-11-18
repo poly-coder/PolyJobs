@@ -1,66 +1,53 @@
 ﻿module FsPolyJobs.Domain.CommandHandlers
+
 open Validus
 
 type JobState = JobStateData option
 
 and JobStateData =
-    { title: JobTitle
-      description: JobDescription
-      jobType: JobType
-      stepType: JobType
-      payload: JobUserData
-      progress: JobProgress
+    { progress: JobProgress
       maxProgress: JobMaxProgress
-      status: JobStatus
-      meta: JobMetadata }
+      status: JobStatus }
 
-let applyEvents state event =
-    match event, state with
-    | JobWasCreated event, None ->
+let jobAlreadyExists: ValidationResult<JobEvent list> =
+    Error(ValidationErrors.create "command" [ "Job already exists" ])
+
+let jobDoesNotExists: ValidationResult<JobEvent list> =
+    Error(ValidationErrors.create "command" [ "Job does not exist" ])
+
+let jobAlreadyCompleted: ValidationResult<JobEvent list> =
+    Error(ValidationErrors.create "command" [ "Job is already completed" ])
+
+module internal Utils =
+    let applyJobWasCreated (event: JobWasCreated) : JobState =
         Some
-            { title = event.title
-              description = event.description
-              jobType = event.jobType
-              stepType = event.stepType
-              payload = event.payload
-              progress = event.progress
+            { progress = event.progress
               maxProgress = event.maxProgress
-              status = event.status
-              meta = event.meta }
+              status = event.status }
 
-    | JobWasCreated _, Some state -> Some state
-
-    | JobWasUpdated event, Some state ->
+    let applyJobWasUpdated state (event: JobWasUpdated) : JobState =
         Some
             { state with
-                stepType = event.stepType
-                payload = event.payload
                 progress = event.progress
                 maxProgress = event.maxProgress
-                status = event.status
-                meta = event.meta }
+                status = event.status }
 
-    | JobWasUpdated _, None -> None
+    let handleJobCreate (command: JobCreate) : ValidationResult<JobEvent list> =
+        let created =
+            JobWasCreated
+                { title = command.title
+                  description = command.description
+                  jobType = command.jobType
+                  stepType = command.stepType
+                  payload = command.payload
+                  progress = command.progress
+                  maxProgress = command.maxProgress
+                  status = command.status
+                  meta = command.meta }
 
-let handleCommand state command =
-    match command, state with
-    | JobCreate command, None ->
-        let created = JobWasCreated {
-              title = command.title
-              description = command.description
-              jobType = command.jobType
-              stepType = command.stepType
-              payload = command.payload
-              progress = command.progress
-              maxProgress = command.maxProgress
-              status = command.status
-              meta = command.meta }
         Ok [ created ]
 
-    | JobCreate _, Some _ ->
-        Error (ValidationErrors.create "command" [ "Job already exists" ])
-
-    | JobUpdate command, Some state ->
+    let handleJobUpdate (state: JobStateData) (command: JobUpdate) : ValidationResult<JobEvent list> =
         match state.status with
         | InProgress ->
             let maxProgress =
@@ -73,17 +60,33 @@ let handleCommand state command =
                 | Some progress -> progress
                 | None -> state.progress
 
-            let updated = JobWasUpdated {
-                stepType = command.stepType
-                payload = command.payload
-                progress = progress
-                maxProgress = maxProgress
-                status = command.status
-                meta = command.meta }
+            let updated =
+                JobWasUpdated
+                    { stepType = command.stepType
+                      payload = command.payload
+                      progress = progress
+                      maxProgress = maxProgress
+                      status = command.status
+                      meta = command.meta }
+
             Ok [ updated ]
 
-        | _ ->
-            Error (ValidationErrors.create "command" [ "Job is already completed" ])
+        | Success _ -> jobAlreadyCompleted
+        | Failure _ -> jobAlreadyCompleted
 
-    | JobUpdate _, None ->
-        Error (ValidationErrors.create "command" [ "Job does not exist" ])
+open Utils
+
+let applyEvent state event =
+    match event, state with
+    | JobWasCreated event, _ -> applyJobWasCreated event
+
+    | JobWasUpdated event, Some state -> applyJobWasUpdated state event
+    | JobWasUpdated _, None -> None
+
+let handleCommand state command =
+    match command, state with
+    | JobCreate command, None -> handleJobCreate command
+    | JobCreate _, Some _ -> jobAlreadyExists
+
+    | JobUpdate command, Some state -> handleJobUpdate state command
+    | JobUpdate _, None -> jobDoesNotExists
