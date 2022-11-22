@@ -5,7 +5,13 @@ VisualStudioVersion = 17.4.33103.184
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "FsPolyJobs.Domain", "FsPolyJobs.Domain\FsPolyJobs.Domain.fsproj", "{6DAE0A74-F00C-4ED8-AB07-53F994FBC617}"
 EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "FsPolyJobs.Domain.Tests", "FsPolyJobs.Domain.Tests\FsPolyJobs.Domain.Tests.fsproj", "{C45F359D-28F3-4CBF-A2DF-5B79613B241F}"
+Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "FsPolyJobs.Domain.Tests", "FsPolyJobs.Domain.Tests\FsPolyJobs.Domain.Tests.fsproj", "{C45F359D-28F3-4CBF-A2DF-5B79613B241F}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "FsPolyJobs.Api", "FsPolyJobs.Api\FsPolyJobs.Api.fsproj", "{DF6837D4-6F41-48D2-9D43-12D8AC2EA579}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "FsPolyJobs.App", "FsPolyJobs.App\FsPolyJobs.App.fsproj", "{1ABCF92C-12EC-4FA9-BE88-E2BA7F9D0CC0}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "FsPolyJobs.Infra", "FsPolyJobs.Infra\FsPolyJobs.Infra.fsproj", "{5D312DF5-2D94-4CE4-A97D-8B6B504BBB29}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +27,18 @@ Global
 		{C45F359D-28F3-4CBF-A2DF-5B79613B241F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C45F359D-28F3-4CBF-A2DF-5B79613B241F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C45F359D-28F3-4CBF-A2DF-5B79613B241F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DF6837D4-6F41-48D2-9D43-12D8AC2EA579}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DF6837D4-6F41-48D2-9D43-12D8AC2EA579}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DF6837D4-6F41-48D2-9D43-12D8AC2EA579}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DF6837D4-6F41-48D2-9D43-12D8AC2EA579}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1ABCF92C-12EC-4FA9-BE88-E2BA7F9D0CC0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1ABCF92C-12EC-4FA9-BE88-E2BA7F9D0CC0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1ABCF92C-12EC-4FA9-BE88-E2BA7F9D0CC0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1ABCF92C-12EC-4FA9-BE88-E2BA7F9D0CC0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5D312DF5-2D94-4CE4-A97D-8B6B504BBB29}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5D312DF5-2D94-4CE4-A97D-8B6B504BBB29}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5D312DF5-2D94-4CE4-A97D-8B6B504BBB29}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5D312DF5-2D94-4CE4-A97D-8B6B504BBB29}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
