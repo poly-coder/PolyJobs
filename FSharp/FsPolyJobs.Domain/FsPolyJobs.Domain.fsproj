@@ -21,7 +21,7 @@
     <Compile Include="JobProjection.fs" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="FsToolkit.ErrorHandling" Version="3.2.0" />
-    <PackageReference Include="Validus" Version="4.0.1" />
+    <PackageReference Include="FsToolkit.ErrorHandling" Version="4.0.0" />
+    <PackageReference Include="Validus" Version="4.0.2" />
   </ItemGroup>
 </Project>

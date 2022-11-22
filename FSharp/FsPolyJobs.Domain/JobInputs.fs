@@ -4,7 +4,7 @@ type JobCommandInput =
     | JobCreateInput of JobCreateInput
     | JobUpdateInput of JobUpdateInput
 
-and [<CLIMutable>] JobCreateInput =
+and JobCreateInput =
     { title: string
       description: string
       jobType: string
@@ -15,7 +15,7 @@ and [<CLIMutable>] JobCreateInput =
       status: JobStatusInput
       meta: Map<string, string> option }
 
-and [<CLIMutable>] JobUpdateInput =
+and JobUpdateInput =
     { stepType: string
       payload: string
       progress: int option
