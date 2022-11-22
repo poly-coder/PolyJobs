@@ -6,13 +6,15 @@ open Swensen.Unquote
 open Validus
 open FsPolyJobs.Domain.CommandHandlers
 open FsCheck.Xunit
+open JobPreamble
 
 [<Property>]
 let ``applyEvent JobWasCreated on any state should apply updates`` (event: JobWasCreated) (state: JobState) =
     let expectedState: JobStateData =
         { progress = event.progress
           maxProgress = event.maxProgress
-          status = event.status }
+          status = event.status
+          meta = event.meta }
 
     let result = applyEvent state (JobWasCreated event)
 
@@ -30,7 +32,8 @@ let ``applyEvent JobWasUpdated on existing state should apply updates`` (event: 
         { state with
             progress = event.progress
             maxProgress = event.maxProgress
-            status = event.status }
+            status = event.status
+            meta = event.meta }
 
     let result =
         applyEvent (Some state) (JobWasUpdated event)
@@ -82,6 +85,10 @@ let ``handleCommand JobUpdate on InProgress state should return events`` (comman
         | Some progress -> progress
         | None -> state.progress
 
+    let meta =
+        addMap state.meta.value command.meta.value
+        |> fun value -> { value = value }
+
     let result =
         handleCommand (Some state) (JobUpdate command)
 
@@ -92,7 +99,7 @@ let ``handleCommand JobUpdate on InProgress state should return events`` (comman
                 progress = progress
                 maxProgress = maxProgress
                 status = command.status
-                meta = command.meta } ]
+                meta = meta } ]
 
     test <@ result = Ok expectedEvents @>
 

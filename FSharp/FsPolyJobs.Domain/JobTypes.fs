@@ -2,15 +2,7 @@
 
 open Validus
 open System
-
-module internal Utils =
-    let trim value =
-        if String.IsNullOrWhiteSpace value then
-            ""
-        else
-            value.Trim()
-
-open Utils
+open FsPolyJobs.Domain.JobPreamble
 
 type JobTitle =
     { value: string }

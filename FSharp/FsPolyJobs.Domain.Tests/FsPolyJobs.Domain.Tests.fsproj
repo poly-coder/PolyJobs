@@ -12,6 +12,7 @@
     <Compile Include="JobTypesTests.fs" />
     <Compile Include="JobCommandsTests.fs" />
     <Compile Include="JobCommandHandlersTests.fs" />
+    <Compile Include="JobProjectionTests.fs" />
     <Compile Include="Program.fs" />
   </ItemGroup>
 

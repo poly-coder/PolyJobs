@@ -12,11 +12,13 @@
     <WarningsAsErrors>3239;FS0025;$(WarningsAsErrors)</WarningsAsErrors>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="JobPreamble.fs" />
     <Compile Include="JobInputs.fs" />
     <Compile Include="JobTypes.fs" />
     <Compile Include="JobEvents.fs" />
     <Compile Include="JobCommands.fs" />
     <Compile Include="JobCommandHandlers.fs" />
+    <Compile Include="JobProjection.fs" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="FsToolkit.ErrorHandling" Version="3.2.0" />

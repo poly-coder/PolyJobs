@@ -1,13 +1,15 @@
 ﻿module FsPolyJobs.Domain.CommandHandlers
 
 open Validus
+open JobPreamble
 
 type JobState = JobStateData option
 
 and JobStateData =
     { progress: JobProgress
       maxProgress: JobMaxProgress
-      status: JobStatus }
+      status: JobStatus
+      meta: JobMetadata }
 
 let jobAlreadyExists: ValidationResult<JobEvent list> =
     Error(ValidationErrors.create "command" [ "Job already exists" ])
@@ -23,14 +25,16 @@ module internal Utils =
         Some
             { progress = event.progress
               maxProgress = event.maxProgress
-              status = event.status }
+              status = event.status
+              meta = event.meta }
 
     let applyJobWasUpdated state (event: JobWasUpdated) : JobState =
         Some
             { state with
                 progress = event.progress
                 maxProgress = event.maxProgress
-                status = event.status }
+                status = event.status
+                meta = event.meta }
 
     let handleJobCreate (command: JobCreate) : ValidationResult<JobEvent list> =
         let created =
@@ -60,6 +64,10 @@ module internal Utils =
                 | Some progress -> progress
                 | None -> state.progress
 
+            let meta =
+                addMap state.meta.value command.meta.value
+                |> fun value -> { value = value }
+
             let updated =
                 JobWasUpdated
                     { stepType = command.stepType
@@ -67,7 +75,7 @@ module internal Utils =
                       progress = progress
                       maxProgress = maxProgress
                       status = command.status
-                      meta = command.meta }
+                      meta = meta }
 
             Ok [ updated ]
 
