@@ -18,7 +18,6 @@ type JobStatusModel =
     { ``type``: JobStatusEnum
       data: string }
 
-
 type JobCreateRequest =
     { [<Required; MaxLength(100)>]
       title: string
@@ -69,3 +68,7 @@ type JobCreateRequest =
                   status = status
                   meta = meta }
         }
+
+type JobCommandResponse =
+    { id: string }
+    static member FromOutput(output: JobCommandOutput) : JobCommandResponse = { id = output.id }

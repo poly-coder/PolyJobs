@@ -1,5 +1,7 @@
 ﻿namespace FsPolyJobs.Domain
 
+open Validus
+
 type JobCommandInput =
     | JobCreateInput of JobCreateInput
     | JobUpdateInput of JobUpdateInput
@@ -27,3 +29,9 @@ and JobStatusInput =
     | InProgressInput
     | SuccessInput of string
     | FailureInput of string
+
+type JobCommandOutput = { id: string }
+
+type JobCommandError =
+    | JobValidationError of ValidationErrors
+    | JobNotFound of id: string

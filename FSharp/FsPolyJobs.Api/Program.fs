@@ -1,6 +1,8 @@
 namespace FsPolyJobs.Api
 
 open Microsoft.OpenApi.Models
+open FsPolyJobs.App
+open FsPolyJobs.Infra
 
 #nowarn "20"
 
@@ -36,6 +38,10 @@ module Program =
                 info
 
             options.SwaggerDoc("v1", info))
+
+        builder.Services.AddSingleton<IClock, SystemClock>()
+        builder.Services.AddSingleton<IIdGen, GuidIdGen>()
+        builder.Services.AddSingleton<IJobCreateService, JobCreateService>()
 
         let app = builder.Build()
 

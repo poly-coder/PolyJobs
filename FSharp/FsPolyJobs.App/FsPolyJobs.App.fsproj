@@ -6,7 +6,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include="Library.fs" />
+    <Compile Include="AppServices.fs" />
+    <Compile Include="JobCreateService.fs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\FsPolyJobs.Domain\FsPolyJobs.Domain.fsproj" />
   </ItemGroup>
 
 </Project>

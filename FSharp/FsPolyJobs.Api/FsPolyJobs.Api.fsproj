@@ -25,7 +25,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\FsPolyJobs.App\FsPolyJobs.App.fsproj" />
     <ProjectReference Include="..\FsPolyJobs.Domain\FsPolyJobs.Domain.fsproj" />
+    <ProjectReference Include="..\FsPolyJobs.Infra\FsPolyJobs.Infra.fsproj" />
   </ItemGroup>
 
 </Project>

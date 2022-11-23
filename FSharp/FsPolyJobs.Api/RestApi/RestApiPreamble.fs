@@ -6,6 +6,7 @@ open Microsoft.AspNetCore.Mvc
 
 type RestApiError =
     | BadRequestOfErrors of ValidationErrors
+    | NotFoundEntity of id: string * entityName: string
 
 let okEmpty (controller: ControllerBase) = controller.Ok() :> IActionResult
 let ok (value: obj) (controller: ControllerBase) = controller.Ok(value) :> IActionResult
@@ -18,6 +19,23 @@ let badRequest (value: obj) (controller: ControllerBase) =
 
 let badRequestErrors (modelState: ModelStateDictionary) (controller: ControllerBase) =
     controller.BadRequest(modelState) :> IActionResult
+
+let notFoundEmpty (controller: ControllerBase) = controller.NotFound() :> IActionResult
+
+let notFound (value: obj) (controller: ControllerBase) =
+    controller.NotFound(value) :> IActionResult
+
+module ProblemDetails =
+    let fromNotFound (id: string) (entityName: string) =
+        let result = ProblemDetails()
+        result.Title <- sprintf "The %s with id %s was not found" entityName id
+        result.Status <- 404
+        result.Extensions.Add("id", id)
+        result.Extensions.Add("entityName", entityName)
+        result
+
+    let notFound (id: string) (entityName: string) (controller: ControllerBase) =
+        notFound (fromNotFound id entityName) controller
 
 module ValidationErrors =
     let toModelState (modelState: ModelStateDictionary) (errors: ValidationErrors) =
@@ -35,4 +53,5 @@ module ValidationErrors =
 let toActionResult (result: Result<'a, RestApiError>) (controller: ControllerBase) =
     match result with
     | Error (BadRequestOfErrors errors) -> ValidationErrors.badRequest errors controller.ModelState controller
+    | Error (NotFoundEntity (id, entityName)) -> ProblemDetails.notFound id entityName controller
     | Ok value -> ok value controller
